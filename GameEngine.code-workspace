@@ -1,0 +1,150 @@
+{
+    "folders": [
+        {
+            "path": ".",
+        },
+    ],
+    "settings": {
+        "files.associations": {
+            "*.h": "cpp",
+            "*.cpp": "cpp",
+        },
+        "C_Cpp.clang_format_style": "file",
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.cpptools",
+            "wayou.vscode-todo-highlight",
+            "slevesque.shader",
+            "esbenp.prettier-vscode",
+        ],
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "(Win) Launch",
+                "type": "cppvsdbg",
+                "request": "launch",
+                "program": "${workspaceFolder}/bin/Debug/Sandbox.exe",
+                "args": [],
+                "stopAtEntry": false,
+                "cwd": "${workspaceFolder}/bin",
+                "environment": [],
+                "externalConsole": true,
+                "console": "newExternalWindow",
+            },
+            {
+                "name": "(Linux) Launch",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceFolder}/bin/Debug/Sandbox",
+                "args": [],
+                "stopAtEntry": false,
+                "cwd": "${workspaceFolder}/bin",
+                "environment": [],
+                "externalConsole": true,
+            },
+        ],
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "type": "shell",
+                "label": "Build Engine (Debug)",
+                "windows": {
+                    "command": "${workspaceFolder}/Engine/build.bat ${workspaceFolder} 0",
+                },
+                "linux": {
+                    "command": "${workspaceFolder}/Engine/build.sh ${workspaceFolder} 0",
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}/Engine",
+                },
+                "problemMatcher": "$gcc",
+                "group": {
+                    "kind": "build",
+                    "isDefault": true,
+                },
+                "detail": "Builds the Game Engine in Debug mode.",
+            },
+            {
+                "type": "shell",
+                "label": "Build Engine (Release)",
+                "windows": {
+                    "command": "${workspaceFolder}/Engine/build.bat ${workspaceFolder} 1",
+                },
+                "linux": {
+                    "command": "${workspaceFolder}/Engine/build.sh ${workspaceFolder} 1",
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}/Engine",
+                },
+                "problemMatcher": "$gcc",
+                "group": {
+                    "kind": "build",
+                    "isDefault": true,
+                },
+                "detail": "Builds the Game Engine in Release mode.",
+            },
+            {
+                "type": "shell",
+                "label": "Build Sandbox (Debug)",
+                "windows": {
+                    "command": "${workspaceFolder}/Sandbox/build.bat ${workspaceFolder} 0",
+                },
+                "linux": {
+                    "command": "${workspaceFolder}/Sandbox/build.sh ${workspaceFolder} 0",
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}/Sandbox",
+                },
+                "problemMatcher": "$gcc",
+                "group": {
+                    "kind": "build",
+                    "isDefault": true,
+                },
+                "detail": "Builds the Sandbox application in Debug mode.",
+            },
+            {
+                "type": "shell",
+                "label": "Build All (Debug)",
+                "windows": {
+                    "command": "${workspaceFolder}/build_all.bat ${workspaceFolder} 0",
+                },
+                "linux": {
+                    "command": "${workspaceFolder}/build_all.sh ${workspaceFolder} 0",
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                },
+                "problemMatcher": "$gcc",
+                "group": {
+                    "kind": "build",
+                    "isDefault": true,
+                },
+                "detail": "Builds all projects in Debug mode.",
+            },
+            {
+                "type": "shell",
+                "label": "Clean All",
+                "windows": {
+                    "command": "${workspaceFolder}/clean.bat ${workspaceFolder}",
+                },
+                "linux": {
+                    "command": "${workspaceFolder}/clean.sh ${workspaceFolder}",
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                },
+                "problemMatcher": "$gcc",
+                "group": {
+                    "kind": "build",
+                    "isDefault": true,
+                },
+                "detail": "Cleans all build artifacts.",
+            },
+        ],
+    },
+}

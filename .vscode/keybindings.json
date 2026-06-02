@@ -1,0 +1,35 @@
+[
+    {
+        "key": "ctrl+shift+alt+d",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Build Engine (Debug)"
+    },
+    {
+        "key": "ctrl+shift+alt+r",
+        "command": "workbench.action.tasks.runTask",
+        "args": {
+            "name": "Build Engine (Release)"
+        }
+    },
+    {
+        "key": "ctrl+shift+alt+s",
+        "command": "workbench.action.tasks.runTask",
+        "args": {
+            "name": "Build Sandbox (Debug)"
+        }
+    },
+    {
+        "key": "ctrl+shift+alt+a",
+        "command": "workbench.action.tasks.runTask",
+        "args": {
+            "name": "Build All (Debug)"
+        }
+    },
+    {
+        "key": "ctrl+shift+alt+c",
+        "command": "workbench.action.tasks.runTask",
+        "args": {
+            "name": "Clean All"
+        }
+    }
+]

@@ -1,0 +1,39 @@
+// // put the file here
+// // C:\Users\Chapool\AppData\Roaming\Code\User\profiles\-9a73b09\snippets\signature.code-snippets
+// {
+// 	"Copyright Madoodia - C/C++": {
+// 		"scope": "c,cpp,h,hpp,java,javascript,typescript,go,rust",
+// 		"prefix": "@",
+// 		"body": [
+// 			"// (C) 2026 madoodia.com",
+// 			"// ---------------------"
+// 		],
+// 		"description": "Copyright header"
+// 	},
+// 	"Copyright Madoodia - Python": {
+// 		"scope": "python,python3",
+// 		"prefix": "@",
+// 		"body": [
+// 			"# (C) 2026 madoodia.com",
+// 			"# ---------------------"
+// 		]
+// 	},
+// 	"Copyright Madoodia - Shell": {
+// 		"scope": "shellscript,bash,sh",
+// 		"prefix": "@",
+// 		"body": [
+// 			"# (C) 2026 madoodia.com",
+// 			"# ---------------------"
+// 		]
+// 	},
+// 	"Copyright Madoodia - JSON/YAML": {
+// 		"scope": "json,yaml,xml",
+// 		"prefix": "@",
+// 		"body": [
+// 			"/*",
+// 			" * (C) 2026 madoodia.com",
+// 			" * ---------------------",
+// 			" */"
+// 		]
+// 	}
+// }
