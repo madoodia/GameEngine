@@ -1,28 +1,27 @@
 {
-	
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"name": "(Win) Launch",
-			"type": "cppvsdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/bin/Debug/Sandbox.exe",
-			"args": [],
-			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/bin",
-			"environment": [],
-			"externalConsole": true,
-			"console": "newExternalWindow",
-		},
-		{
-			"name": "(Linux) Launch",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/bin/Debug/Sandbox",
-			"args": [],
-			"stopOnEntry": false,
-			"cwd": "${workspaceFolder}/bin",
-			"env": {}
-		},
-	],
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(Win) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Debug/Sandbox.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "environment": [],
+            "externalConsole": true,
+            "console": "newExternalWindow"
+        },
+        {
+            "name": "(Linux) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/Sandbox",
+            "args": [],
+            "stopOnEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "env": {}
+        }
+    ]
 }

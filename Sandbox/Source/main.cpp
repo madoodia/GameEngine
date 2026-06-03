@@ -1,10 +1,11 @@
 // (C) 2026 madoodia.com
 // ---------------------
-
-#include <test.h>
+#include <stdio.h>
 
 int main()
 {
-	TestFunction(42);
+	printf("%i", 42);
+	printf("%i", 42);
+	printf("%i", 42);
 	return 0;
 }

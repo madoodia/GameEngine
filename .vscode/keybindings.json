@@ -1,4 +1,5 @@
 [
+    // Game Engine specific keybindings
     {
         "key": "ctrl+shift+alt+d",
         "command": "workbench.action.tasks.runTask",
@@ -7,29 +8,26 @@
     {
         "key": "ctrl+shift+alt+r",
         "command": "workbench.action.tasks.runTask",
-        "args": {
-            "name": "Build Engine (Release)"
-        }
+        "args": "Build Engine (Release)"
     },
     {
         "key": "ctrl+shift+alt+s",
         "command": "workbench.action.tasks.runTask",
-        "args": {
-            "name": "Build Sandbox (Debug)"
-        }
+        "args": "Build Sandbox (Debug)"
     },
     {
         "key": "ctrl+shift+alt+a",
         "command": "workbench.action.tasks.runTask",
-        "args": {
-            "name": "Build All (Debug)"
-        }
+        "args": "Build All (Debug)"
     },
     {
         "key": "ctrl+shift+alt+c",
         "command": "workbench.action.tasks.runTask",
-        "args": {
-            "name": "Clean All"
-        }
+        "args": "Clean All"
+    },
+    {
+        "key": "ctrl+shift+alt+p",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Profiling"
     }
 ]
