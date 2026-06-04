@@ -8,7 +8,7 @@
             "program": "${workspaceFolder}/Bin/Debug/Sandbox.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/bin",
+            "cwd": "${workspaceFolder}/Bin",
             "environment": [],
             "preLaunchTask": "Build All (Debug)",
             "externalConsole": true,
@@ -18,10 +18,10 @@
             "name": "(Linux) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Debug/Sandbox",
+            "program": "${workspaceFolder}/Bin/Debug/Sandbox",
             "args": [],
             "stopOnEntry": false,
-            "cwd": "${workspaceFolder}/bin",
+            "cwd": "${workspaceFolder}/Bin",
             "env": {}
         }
     ]

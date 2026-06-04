@@ -7,13 +7,17 @@ TabWidth: 4
 PointerAlignment: Left
 BreakBeforeBraces: Custom
 AllowShortIfStatementsOnASingleLine: false
-IndentCaseLabels: true
 ColumnLimit: 0
 AccessModifierOffset: -4
 SortIncludes: false
 EmptyLineBeforeAccessModifier: Always
+IndentCaseLabels: true
+IndentCaseBlocks: false
+BreakAfterOpenBracketFunction: false
+BreakAfterOpenBracketIf: false
+BreakAfterOpenBracketLoop: false
+BreakAfterOpenBracketSwitch: false
 BraceWrapping:
-    AfterCaseLabel: false
     AfterEnum: true
     AfterStruct: true
     AfterUnion: true
@@ -21,7 +25,6 @@ BraceWrapping:
     AfterClass: true
     AfterNamespace: true
     AfterFunction: true
-    BeforeElse: false
-    AfterElse: false
-    AfterControlStatements: false
-    SplitEmptyFunction: false
+# PackParameters:
+#     BinPack: UseBreakAfter
+#     BreakAfter: 4

@@ -2,6 +2,7 @@
 
 # (C) 2026 madoodia.com
 # ---------------------
+
 # Linux Build System
 # Build system for the Engine
 
@@ -31,7 +32,7 @@ fi
 
 PROJECT="Engine"
 INCLUDE_FLAGS="-ISource -I${VULKAN_SDK}/include"
-LIBRARY_FLAGS="-lvulkan -lxcb -lX11 -lxcb -lxkbcommon-x11 -L${VULKAN_SDK}/lib"
+LIBRARY_FLAGS="-lvulkan -lxcb -lX11 -lxcb -lX11-xcb -lxkbcommon-x11 -L${VULKAN_SDK}/lib"
 DEFINES="-D${BUILD_FLAG} -DGEEXPORT"
 
 echo "BUILDING $PROJECT with configuration: $BUILD_CONFIG"

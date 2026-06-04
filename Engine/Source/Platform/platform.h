@@ -34,4 +34,4 @@ void PlatformConsoleWriteError(const char* Message, u8 Colour);
 f64 PlatformGetAbsoluteTime();
 
 // MilliSecond
-void PlatformSleep(u64 Duration);
+void PlatformSleep(u64 MSec);

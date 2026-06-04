@@ -2,7 +2,7 @@
 // ---------------------
 
 #include "Core/logger.h"
-#include "Platform\platform.h"
+#include "Platform/platform.h"
 
 // Windows Platform Layer
 #if GEPLATFORM_WINDOWS
@@ -21,19 +21,17 @@ static f64 ClockFreq;
 static LARGE_INTEGER StartTime;
 
 LRESULT CALLBACK
-Win32Proc(
-    HWND HWindow,
-    u32 msg,
-    WPARAM WParam,
-    LPARAM LParam);
+Win32Proc(HWND HWindow,
+          u32 msg,
+          WPARAM WParam,
+          LPARAM LParam);
 
-b8 PlatformStartUp(
-    PlatformState* PState,
-    const char* ApplicationName,
-    i32 X,
-    i32 Y,
-    i32 Width,
-    i32 Height)
+b8 PlatformStartUp(PlatformState* PState,
+                   const char* ApplicationName,
+                   i32 X,
+                   i32 Y,
+                   i32 Width,
+                   i32 Height)
 {
     // TODO: try to use VirtualAlloc instead of malloc
     PState->InternalState = malloc(sizeof(InternalState));
@@ -89,10 +87,9 @@ b8 PlatformStartUp(
     WindowWidth += BorderRect.right - BorderRect.left;
     WindowHeight += BorderRect.bottom - BorderRect.top;
 
-    HWND WHandle = CreateWindowExA(
-        WindowExStyle, "GameEngineWindowClass", ApplicationName,
-        WindowStyle, WindowX, WindowY, WindowWidth, WindowHeight,
-        0, 0, State->HInstance, 0);
+    HWND WHandle = CreateWindowExA(WindowExStyle, "GameEngineWindowClass", ApplicationName,
+                                   WindowStyle, WindowX, WindowY, WindowWidth, WindowHeight,
+                                   0, 0, State->HInstance, 0);
 
     if (WHandle == 0) {
         MessageBoxA(nullptr, "Window Creation Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
@@ -202,11 +199,10 @@ void PlatformSleep(u64 MSec)
 }
 
 LRESULT CALLBACK
-Win32Proc(
-    HWND HWindow,
-    u32 Message,
-    WPARAM WParam,
-    LPARAM LParam)
+Win32Proc(HWND HWindow,
+          u32 Message,
+          WPARAM WParam,
+          LPARAM LParam)
 {
     switch (Message) {
         case WM_ERASEBKGND:
