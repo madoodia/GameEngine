@@ -1,11 +1,15 @@
 // (C) 2026 madoodia.com
 // ---------------------
-#include <stdio.h>
+
+#include <Core/logger.h>
 
 int main()
 {
-	printf("%i", 42);
-	printf("%i", 42);
-	printf("%i", 42);
-	return 0;
+    GEFATAL("This is a FATALITY message: %f", 2026.1);
+    GEERROR("This is a FATALITY message: %f", 2026.1);
+    GEWARNING("This is a FATALITY message: %f", 2026.1);
+    GEINFO("This is a FATALITY message: %f", 2026.1);
+    GEDEBUG("This is a FATALITY message: %f", 2026.1);
+    GETRACE("This is a FATALITY message: %f", 2026.1);
+    return 0;
 }

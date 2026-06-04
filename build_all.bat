@@ -11,6 +11,7 @@ SET INPUT=%2
 
 
 ECHO "BUILDING All with configuration: %BUILD_CONFIG%"
+ECHO.
 
 PUSHD Engine
 CALL build.bat %ROOT_DIR% %INPUT%
@@ -27,7 +28,6 @@ IF %ERRORLEVEL% NEQ 0 (
 	ECHO "Failed to build Sandbox"
 	EXIT /B %ERRORLEVEL%
 )
-
 
 
 
