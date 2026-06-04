@@ -10,8 +10,8 @@ SET ROOT_DIR=%1
 SET INPUT=%2
 
 
-ECHO "BUILDING All with configuration: %BUILD_CONFIG%"
-ECHO.
+@REM ECHO "BUILDING All with configuration: %BUILD_CONFIG%"
+@REM ECHO.
 
 PUSHD Engine
 CALL build.bat %ROOT_DIR% %INPUT%
@@ -29,6 +29,4 @@ IF %ERRORLEVEL% NEQ 0 (
 	EXIT /B %ERRORLEVEL%
 )
 
-
-
-
+ECHO "Build completed successfully!"

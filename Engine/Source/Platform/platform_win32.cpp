@@ -168,7 +168,7 @@ void* PlatformSetMemory(void* Destination, i32 Value, u64 Size)
 void PlatformConsoleWrite(const char* Message, u8 Colour)
 {
     HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    static u8 Levels[6] = {64, 4, 6, 2, 1, 8};
+    static u8 Levels[6] = {64, 4, 8, 2, 1, 11};
     SetConsoleTextAttribute(ConsoleHandle, Levels[Colour]);
 
     OutputDebugStringA(Message);
@@ -180,7 +180,7 @@ void PlatformConsoleWrite(const char* Message, u8 Colour)
 void PlatformConsoleWriteError(const char* Message, u8 Colour)
 {
     HANDLE ConsoleHandle = GetStdHandle(STD_ERROR_HANDLE);
-    static u8 Levels[6] = {64, 4, 6, 2, 1, 8};
+    static u8 Levels[6] = {64, 4, 8, 2, 1, 11};
     SetConsoleTextAttribute(ConsoleHandle, Levels[Colour]);
 
     OutputDebugStringA(Message);

@@ -38,9 +38,9 @@ SET INCLUDE_FLAGS=-ISource -I%ROOT_DIR%/Engine/Source
 SET LIBRARY_FLAGS=-L%ROOT_DIR%/Bin/%BUILD_CONFIG% -lEngine.lib
 SET DEFINES=-D%BUILD_FLAG% -DGEIMPORT
 
-ECHO "BUILDING %PROJECT% with configuration: %BUILD_CONFIG%"
+@REM ECHO "BUILDING %PROJECT% with configuration: %BUILD_CONFIG%"
 clang++ %SOURCE_FILES% %COMPILER_FLAGS% %INCLUDE_FLAGS% %LIBRARY_FLAGS% %DEFINES% -o %ROOT_DIR%/Bin/%BUILD_CONFIG%/%PROJECT%.exe
 
-ECHO "Build completed successfully!"
+@REM ECHO "Build completed successfully!"
 
 
