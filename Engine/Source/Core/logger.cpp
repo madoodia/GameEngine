@@ -2,6 +2,7 @@
 // ---------------------
 
 #include "logger.h"
+#include "asserts.h"
 
 // TEMP:
 #include <stdio.h>
@@ -49,4 +50,9 @@ void LogOutput(LogLevel Level, const char* Message, ...)
     // TODO: Platform Specific Output
     // TEMP:
     printf("%s", FinalMessage);
+}
+
+void ReportFailure(const char* Expression, const char* Message, const char* File, i32 line)
+{
+    LogOutput(LOG_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n", Expression, Message, File, line);
 }

@@ -2,6 +2,7 @@
 // ---------------------
 
 #include <Core/logger.h>
+#include <Core/asserts.h>
 
 int main()
 {
@@ -11,5 +12,10 @@ int main()
     GEINFO("This is a FATALITY message: %f", 2026.1);
     GEDEBUG("This is a FATALITY message: %f", 2026.1);
     GETRACE("This is a FATALITY message: %f", 2026.1);
+
+    GEASSERT(1 == 2);
+    GEASSERT_MSG(1 == 2, "Should be same");
+    GEASSERT_DEBUG('A' == 'C');
+
     return 0;
 }
