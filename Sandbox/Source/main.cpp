@@ -4,6 +4,9 @@
 #include <Core/logger.h>
 #include <Core/asserts.h>
 
+// TEMP:
+#include <Platform/platform.h>
+
 int main()
 {
     GEFATAL("This is a FATALITY message: %f", 2026.1);
@@ -13,9 +16,16 @@ int main()
     GEDEBUG("This is a FATALITY message: %f", 2026.1);
     GETRACE("This is a FATALITY message: %f", 2026.1);
 
-    GEASSERT(1 == 2);
-    GEASSERT_MSG(1 == 2, "Should be same");
-    GEASSERT_DEBUG('A' == 'C');
+    // GEASSERT(1 == 2);
+    // GEASSERT_MSG(1 == 2, "Should be same");
+    // GEASSERT_DEBUG('A' == 'C');
 
+    PlatformState State;
+    if (PlatformStartUp(&State, "My Game Engine", 100, 100, 1280, 720)) {
+        while (TRUE) {
+            PlatformPumpMessage(&State);
+        }
+    }
+    PlatformShutdown(&State);
     return 0;
 }

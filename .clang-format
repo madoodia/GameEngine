@@ -5,11 +5,23 @@ UseTab: Never
 IndentWidth: 4
 TabWidth: 4
 PointerAlignment: Left
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
 AllowShortIfStatementsOnASingleLine: false
-IndentCaseLabels: false
+IndentCaseLabels: true
 ColumnLimit: 0
 AccessModifierOffset: -4
 SortIncludes: false
 EmptyLineBeforeAccessModifier: Always
-
+BraceWrapping:
+    AfterCaseLabel: false
+    AfterEnum: true
+    AfterStruct: true
+    AfterUnion: true
+    AfterExternBlock: true
+    AfterClass: true
+    AfterNamespace: true
+    AfterFunction: true
+    BeforeElse: false
+    AfterElse: false
+    AfterControlStatements: false
+    SplitEmptyFunction: false
