@@ -5,8 +5,11 @@
 #include "Platform/platform.h"
 #include "Core/logger.h"
 
+#include "game_types.h"
+
 struct ApplicationState
 {
+    Game* GameInstance;
     b8 IsRunning;
     b8 IsSuspended;
     PlatformState PState;
@@ -19,13 +22,15 @@ static b8 IsInitialized = FALSE;
 static ApplicationState AppState;
 
 // Create the application and initialize subsystems
-b8 ApplicationCreate(ApplicationConfig* Config)
+b8 ApplicationCreate(Game* GameInstance)
 {
     if (IsInitialized)
     {
         GEERROR("Application is already initialized!");
         return FALSE;
     }
+
+    AppState.GameInstance = GameInstance;
 
     // Initialize subsystems here (e.g., logging, input, audio, etc.)
     InitializeLogging();
@@ -42,14 +47,23 @@ b8 ApplicationCreate(ApplicationConfig* Config)
     AppState.IsSuspended = FALSE;
 
     if (!PlatformStartUp(&AppState.PState,
-                         Config->Name,
-                         Config->WindowX,
-                         Config->WindowY,
-                         Config->WindowWidth,
-                         Config->WindowHeight))
+                         GameInstance->AppConfig.Name,
+                         GameInstance->AppConfig.WindowX,
+                         GameInstance->AppConfig.WindowY,
+                         GameInstance->AppConfig.WindowWidth,
+                         GameInstance->AppConfig.WindowHeight))
     {
         return FALSE;
     }
+
+    // Call the game's Initialize function
+    if (!AppState.GameInstance->Initialize(AppState.GameInstance))
+    {
+        GEFATAL("Game initialization failed!");
+        return FALSE;
+    }
+
+    AppState.GameInstance->OnResize(AppState.GameInstance, AppState.Width, AppState.Height);
 
     IsInitialized = TRUE;
 
@@ -64,6 +78,26 @@ b8 ApplicationRun()
         if (!PlatformPumpMessage(&AppState.PState))
         {
             AppState.IsRunning = FALSE;
+        }
+
+        if (!AppState.IsSuspended)
+        {
+            // Call the game's Update function
+            // TODO: Calculate delta time
+            if (!AppState.GameInstance->Update(AppState.GameInstance, (f32)0.0f))
+            {
+                GEFATAL("Game update failed!");
+                AppState.IsRunning = FALSE;
+                break;
+            }
+
+            // Call the game's Render function
+            if (!AppState.GameInstance->Render(AppState.GameInstance, (f32)0.0f))
+            {
+                GEFATAL("Game render failed!");
+                AppState.IsRunning = FALSE;
+                break;
+            }
         }
     }
 

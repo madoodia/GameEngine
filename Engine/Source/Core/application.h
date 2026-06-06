@@ -5,6 +5,8 @@
 
 #include "defines.h"
 
+// Forward declaration of the Game structure
+struct Game;
 struct ApplicationConfig
 {
     i16 WindowX;
@@ -21,5 +23,5 @@ struct ApplicationConfig
  * @param Config Pointer to the application configuration structure containing window properties and application name
  * @return boolean value indicating success or failure of the startup process
  */
-GEAPI b8 ApplicationCreate(ApplicationConfig* Config);
+GEAPI b8 ApplicationCreate(struct Game* GameInstance);
 GEAPI b8 ApplicationRun();

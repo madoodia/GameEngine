@@ -15,9 +15,9 @@ $form.TopMost = $true
 # Directory label
 $labelDir = New-Object System.Windows.Forms.Label
 $labelDir.Text = "Module Path:"
-$labelDir.Left = 20
+$labelDir.Left = 10
 $labelDir.Top = 40
-$labelDir.Width = 65
+$labelDir.Width = 80
 $labelDir.Height = 20
 $form.Controls.Add($labelDir)
 
