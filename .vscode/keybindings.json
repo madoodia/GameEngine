@@ -26,8 +26,13 @@
         "args": "Clean All"
     },
     {
-        "key": "ctrl+shift+alt+p",
+        "key": "ctrl+shift+alt+g",
         "command": "workbench.action.tasks.runTask",
-        "args": "Profiling"
+        "args": "Generate C++ Files"
+    },
+    {
+        "key": "ctrl+shift+alt+f",
+        "command": "workbench.action.tasks.runTask",
+        "args": ""
     }
 ]

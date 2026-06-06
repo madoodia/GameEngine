@@ -114,6 +114,50 @@
                 "isDefault": false
             },
             "detail": "Debugging and Profiling the Sandbox in Visual Studio."
+        },
+        {
+            "label": "Generate C++ Files",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/file_generator.ps1",
+                "-WorkspaceRoot",
+                "${workspaceFolder}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "isBackground": false
+        },
+        {
+            "label": "Generate C++ Files",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/file_generator.ps1",
+                "-WorkspaceRoot",
+                "${workspaceFolder}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "isBackground": false
         }
     ]
 }

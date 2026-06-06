@@ -210,6 +210,7 @@ Win32Proc(HWND HWindow,
             return 1;
         case WM_CLOSE:
             // TODO: Fire an event for the application to quit.
+            // TODO: First set a bool variable, like, Running = false
             return 0;
         case WM_DESTROY:
             PostQuitMessage(0);
