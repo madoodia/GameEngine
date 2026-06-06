@@ -10,7 +10,7 @@ struct PlatformState
     void* InternalState;
 };
 
-GEAPI b8 PlatformStartUp(
+b8 PlatformStartUp(
     PlatformState* PState,
     const char* ApplicationName,
     i32 X,
@@ -18,9 +18,9 @@ GEAPI b8 PlatformStartUp(
     i32 Width,
     i32 Height);
 
-GEAPI void PlatformShutdown(PlatformState* PState);
+void PlatformShutdown(PlatformState* PState);
 
-GEAPI b8 PlatformPumpMessage(PlatformState* PState);
+b8 PlatformPumpMessage(PlatformState* PState);
 
 void* PlatformAllocate(u64 Size, b8 Aligned);
 void PlatformFree(void* Block, b8 Aligned);

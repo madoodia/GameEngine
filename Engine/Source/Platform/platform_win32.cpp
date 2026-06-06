@@ -56,7 +56,8 @@ b8 PlatformStartUp(PlatformState* PState,
     WindowClass.lpszClassName = "GameEngineWindowClass";
 
     // Registering Window Class
-    if (!RegisterClassA(&WindowClass)) {
+    if (!RegisterClassA(&WindowClass))
+    {
         MessageBoxA(nullptr, "Window Registration Failed!", "Error", MB_ICONEXCLAMATION | MB_OK);
         return FALSE;
     }
@@ -91,11 +92,13 @@ b8 PlatformStartUp(PlatformState* PState,
                                    WindowStyle, WindowX, WindowY, WindowWidth, WindowHeight,
                                    0, 0, State->HInstance, 0);
 
-    if (WHandle == 0) {
+    if (WHandle == 0)
+    {
         MessageBoxA(nullptr, "Window Creation Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
         GEFATAL("Window Creation Failed!");
         return FALSE;
-    } else {
+    } else
+    {
         State->HWindow = WHandle;
     }
 
@@ -117,7 +120,8 @@ void PlatformShutdown(PlatformState* PState)
 {
     InternalState* State = (InternalState*)PState->InternalState;
 
-    if (State->HWindow) {
+    if (State->HWindow)
+    {
         DestroyWindow(State->HWindow);
         State->HWindow = nullptr;
     }
@@ -127,7 +131,8 @@ b8 PlatformPumpMessage(PlatformState* PState)
 {
     MSG Message;
 
-    while (PeekMessageA(&Message, nullptr, 0, 0, PM_REMOVE)) {
+    while (PeekMessageA(&Message, nullptr, 0, 0, PM_REMOVE))
+    {
         TranslateMessage(&Message);
         DispatchMessageA(&Message);
     }
@@ -137,28 +142,31 @@ b8 PlatformPumpMessage(PlatformState* PState)
 
 void* PlatformAllocate(u64 Size, b8 Aligned)
 {
-    // TEMP:
+    // TEMP: Replace with VirtualAlloc for better performance and control over memory
     return malloc(Size);
 }
 
 void PlatformFree(void* Block, b8 Aligned)
 {
-    // TEMP:
+    // TEMP: Replace with VirtualFree if using VirtualAlloc in PlatformAllocate
     free(Block);
 }
 
 void* PlatformZeroMemory(void* Block, u64 Size)
 {
+    // TEMP: Replace with VirtualAlloc and MEM_RESET if using VirtualAlloc in PlatformAllocate
     return memset(Block, 0, Size);
 }
 
 void* PlatformCopyMemory(void* Destination, const char* Source, u64 Size)
 {
+    // TEMP: Replace with VirtualAlloc and MEM_RESET if using VirtualAlloc in PlatformAllocate
     return memcpy(Destination, Source, Size);
 }
 
 void* PlatformSetMemory(void* Destination, i32 Value, u64 Size)
 {
+    // TEMP: Replace with VirtualAlloc and MEM_RESET if using VirtualAlloc in PlatformAllocate
     return memset(Destination, Value, Size);
 }
 
@@ -204,7 +212,8 @@ Win32Proc(HWND HWindow,
           WPARAM WParam,
           LPARAM LParam)
 {
-    switch (Message) {
+    switch (Message)
+    {
         case WM_ERASEBKGND:
             // NOTE:Notify the OS that erasing the background will be handled by aplication to prevent flicker.
             return 1;
@@ -222,26 +231,30 @@ Win32Proc(HWND HWindow,
             // u32 Width = Rect.right - Rect.left;
             // u32 Width = Rect.buttom - Rect.top;
             // TODO: Fire an event for winsow resize
-        } break;
+        }
+        break;
         case WM_KEYDOWN:
         case WM_SYSKEYDOWN:
         case WM_KEYUP:
         case WM_SYSKEYUP: {
             // b8 Pressed = (Message == WM_KEYDOWN || Message == WM_SYSKEYDOWN);
             // TODO: Input Processing
-        } break;
+        }
+        break;
         case WM_MOUSEMOVE: {
             // i32 XPos = GET_X_LPARAM(LParam);
             // i32 YPos = GET_Y_LPARAM(LParam);
             // TODO: Input Processing
-        } break;
+        }
+        break;
         case WM_MOUSEWHEEL: {
             // i32 ZDelta = GET_WHEEL_DELTA_WPARAM(WParam);
             // if (ZDelta != 0) {
             //     ZDelta = (ZDelta < 0) ? -1 : 1;
             // 	// TODO: Input Processing
             // }
-        } break;
+        }
+        break;
         case WM_LBUTTONDOWN:
         case WM_MBUTTONDOWN:
         case WM_RBUTTONDOWN:
@@ -250,7 +263,8 @@ Win32Proc(HWND HWindow,
         case WM_RBUTTONUP: {
             // b8 Pressed = Message == WM_LBUTTONDOWN || Message == WM_MBUTTONDOWN || Message == WM_RBUTTONDOWN;
             // // TODO: Input Processing
-        } break;
+        }
+        break;
     }
     return DefWindowProcA(HWindow, Message, WParam, LParam);
 }

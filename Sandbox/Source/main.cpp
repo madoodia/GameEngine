@@ -5,27 +5,27 @@
 #include <Core/asserts.h>
 
 // TEMP:
-#include <Platform/platform.h>
+#include <Core/application.h>
 
 int main()
 {
-    GEFATAL("This is a FATALITY message: %f", 2026.1);
-    GEERROR("This is a FATALITY message: %f", 2026.1);
-    GEWARNING("This is a FATALITY message: %f", 2026.1);
-    GEINFO("This is a FATALITY message: %f", 2026.1);
-    GEDEBUG("This is a FATALITY message: %f", 2026.1);
-    GETRACE("This is a FATALITY message: %f", 2026.1);
+    ApplicationConfig Config;
+    Config.Name = "Game Engine Sandbox";
+    Config.WindowX = 100;
+    Config.WindowY = 100;
+    Config.WindowWidth = 1280;
+    Config.WindowHeight = 720;
 
-    // GEASSERT(1 == 2);
-    // GEASSERT_MSG(1 == 2, "Should be same");
-    // GEASSERT_DEBUG('A' == 'C');
-
-    PlatformState State;
-    if (PlatformStartUp(&State, "My Game Engine", 100, 100, 1280, 720)) {
-        while (TRUE) {
-            PlatformPumpMessage(&State);
-        }
+    if (!ApplicationCreate(&Config))
+    {
+        GEERROR("Failed to create application!");
+        return -1;
     }
-    PlatformShutdown(&State);
+    if (!ApplicationRun())
+    {
+        GEERROR("Failed to run application!");
+        return -1;
+    }
+
     return 0;
 }
