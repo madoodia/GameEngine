@@ -22,28 +22,28 @@ int main()
     Game GameInstance = {};
     if (!CreateGame(&GameInstance))
     {
-        GEERROR("Failed to create game instance!");
+        GEFATAL("Failed to create game instance!");
         return -1;
     }
 
     // Ensure the Function Pointers exist
     if (!GameInstance.Initialize || !GameInstance.Update || !GameInstance.Render || !GameInstance.OnResize)
     {
-        GEERROR("Game instance is missing required function pointers!");
+        GEFATAL("Game instance is missing required function pointers!");
         return -2;
     }
 
     // Initialization of the Game
     if (!ApplicationCreate(&GameInstance))
     {
-        GEERROR("Failed to create application!");
+        GEINFO("Failed to create application!");
         return 1;
     }
 
     // Main Game Loop
     if (!ApplicationRun())
     {
-        GEERROR("Failed to run application!");
+        GEINFO("Failed to run application!");
         return 2;
     }
 

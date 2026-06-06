@@ -13,13 +13,13 @@ b8 GameInitialize(Game* GameInstance)
 
 b8 GameUpdate(Game* GameInstance, f32 DeltaTime)
 {
-    GEDEBUG("Game Update - DeltaTime: %f", DeltaTime);
+    // GEDEBUG("Game Update - DeltaTime: %f", DeltaTime);
     return TRUE;
 }
 
 b8 GameRender(Game* GameInstance, f32 DeltaTime)
 {
-    GEDEBUG("Game Render - DeltaTime: %f", DeltaTime);
+    // GEDEBUG("Game Render - DeltaTime: %f", DeltaTime);
     return TRUE;
 }
 
