@@ -56,7 +56,8 @@ b8 PlatformStartUp(PlatformState* PState,
     // Retrieve the connection from the Display
     State->Connection = XGetXCBConnection(State->Display);
 
-    if (xcb_connection_has_error(State->Connection)) {
+    if (xcb_connection_has_error(State->Connection))
+    {
         GEFATAL("Faile to connect to the X server via xcb!");
         return False;
     }
@@ -67,7 +68,8 @@ b8 PlatformStartUp(PlatformState* PState,
     // Loop through screens using iterator.
     xcb_screen_iterator_t Iterator = xcb_setup_roots_iterator(Setup);
     int ScreenP = 0;
-    for (i32 s = ScreenP; s > 0; s--) {
+    for (i32 s = ScreenP; s > 0; s--)
+    {
         xcb_screen_next(&Iterator);
     }
 
@@ -148,7 +150,8 @@ b8 PlatformStartUp(PlatformState* PState,
 
     // Flush the stream
     i32 StreamResult = xcb_flush(State->Connection);
-    if (StreamResult <= 0) {
+    if (StreamResult <= 0)
+    {
         GEFATAL("An error occuredwhen flushing the stream: %d", StreamResult);
         return FALSE;
     }
@@ -175,39 +178,49 @@ b8 PlatformPumpMessage(PlatformState* PState)
 
     b8 QuitFlagged = FALSE;
 
-    while (Event != 0) {
+    while (Event != 0)
+    {
         Event = xcb_poll_for_event(State->Connection);
-        if (Event == 0) {
+        if (Event == 0)
+        {
             break;
         }
 
         // Handle Input events
-        switch (Event->response_type & ~0x80) {
+        switch (Event->response_type & ~0x80)
+        {
             case XCB_KEY_PRESS:
             case XCB_KEY_RELEASE: {
                 // TODO: Keys press/release
-            } break;
+            }
+            break;
             case XCB_BUTTON_PRESS:
             case XCB_BUTTON_RELEASE: {
                 // TODO: Mouse Buttons press/release
-            } break;
+            }
+            break;
             case XCB_MOTION_NOTIFY: {
                 // TODO: Mouse movement
-            } break;
+            }
+            break;
             case XCB_CONFIGURE_NOTIFY: {
                 // TODO: Resizing
-            } break;
+            }
+            break;
             case XCB_CLIENT_MESSAGE: {
                 CMessage = (xcb_client_message_event_t*)Event;
 
                 // Window Close
-                if (CMessage->data.data32[0] == State->WmDeleteWin) {
+                if (CMessage->data.data32[0] == State->WmDeleteWin)
+                {
                     QuitFlagged = TRUE;
                 }
-            } break;
+            }
+            break;
             default: {
                 // Whatever else
-            } break;
+            }
+            break;
         }
         // by calling xcb_poll_for_event xcb will allocate event dynamically on heap,
         // so it should be freed out
@@ -232,7 +245,7 @@ void* PlatformZeroMemory(void* Block, u64 Size)
     return memset(Block, 0, Size);
 }
 
-void* PlatformCopyMemory(void* Destination, const char* Source, u64 Size)
+void* PlatformCopyMemory(void* Destination, const void* Source, u64 Size)
 {
     return memcpy(Destination, Source, Size);
 }
@@ -272,7 +285,8 @@ void PlatformSleep(u64 MSec)
     TSpec.tv_nsec = (MSec % 1000) * 1000 * 1000;
     nanosleep(&TSpec, 0);
 #else
-    if (MSec > 1000) {
+    if (MSec > 1000)
+    {
         sleep(MSec / 1000);
     }
     usleep((MSec % 1000) * 1000);

@@ -4,6 +4,7 @@
 #include "Core/application.h"
 #include "Platform/platform.h"
 #include "Core/logger.h"
+#include "Core/ge_memory.h"
 
 #include "game_types.h"
 
@@ -73,6 +74,7 @@ b8 ApplicationCreate(Game* GameInstance)
 // Game Loop
 b8 ApplicationRun()
 {
+    GEINFO(GetMemoryUsageString());
     while (AppState.IsRunning)
     {
         if (!PlatformPumpMessage(&AppState.PState))

@@ -4,8 +4,7 @@
 
 #include <entry.h>
 
-// TEMP: Remove this
-#include <Platform/platform.h>
+#include <Core/ge_memory.h>
 
 b8 CreateGame(Game* OutGame)
 {
@@ -23,7 +22,7 @@ b8 CreateGame(Game* OutGame)
     OutGame->OnResize = GameOnResize;
 
     // Create the Game State
-    OutGame->State = PlatformAllocate(sizeof(GameState), FALSE);
+    OutGame->State = AllocateMemory(sizeof(GameState), MemoryTags::MEMORY_TAG_GAME);
 
     return TRUE;
 }

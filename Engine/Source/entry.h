@@ -6,6 +6,7 @@
 #include "Core/application.h"
 #include "Core/logger.h"
 #include "Core/asserts.h"
+#include "Core/ge_memory.h"
 #include "game_types.h"
 
 // Externally-Defined Function to Create the Game Application
@@ -18,6 +19,8 @@ extern b8 CreateGame(Game* GameInstance);
  */
 int main()
 {
+    InitializeMemory();
+
     // Request a Game Instance from the Application
     Game GameInstance = {};
     if (!CreateGame(&GameInstance))
@@ -46,6 +49,8 @@ int main()
         GEINFO("Failed to run application!");
         return 2;
     }
+
+    ShutdownMemory();
 
     return 0;
 }

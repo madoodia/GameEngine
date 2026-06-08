@@ -158,7 +158,7 @@ void* PlatformZeroMemory(void* Block, u64 Size)
     return memset(Block, 0, Size);
 }
 
-void* PlatformCopyMemory(void* Destination, const char* Source, u64 Size)
+void* PlatformCopyMemory(void* Destination, const void* Source, u64 Size)
 {
     // TEMP: Replace with VirtualAlloc and MEM_RESET if using VirtualAlloc in PlatformAllocate
     return memcpy(Destination, Source, Size);

@@ -22,10 +22,10 @@ void PlatformShutdown(PlatformState* PState);
 
 b8 PlatformPumpMessage(PlatformState* PState);
 
-GEAPI void* PlatformAllocate(u64 Size, b8 Aligned);
-GEAPI void PlatformFree(void* Block, b8 Aligned);
+void* PlatformAllocate(u64 Size, b8 Aligned);
+void PlatformFree(void* Block, b8 Aligned);
 void* PlatformZeroMemory(void* Block, u64 Size);
-void* PlatformCopyMemory(void* Destination, const char* source, u64 Size);
+void* PlatformCopyMemory(void* Destination, const void* Source, u64 Size);
 void* PlatformSetMemory(void* Destination, i32 Value, u64 Size);
 
 void PlatformConsoleWrite(const char* Message, u8 Colour);
