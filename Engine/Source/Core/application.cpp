@@ -5,6 +5,7 @@
 #include "Platform/platform.h"
 #include "Core/logger.h"
 #include "Core/ge_memory.h"
+#include "Core/event.h"
 
 #include "game_types.h"
 
@@ -46,6 +47,12 @@ b8 ApplicationCreate(Game* GameInstance)
 
     AppState.IsRunning = TRUE;
     AppState.IsSuspended = FALSE;
+
+    if (!InitializeEvent())
+    {
+        GEFATAL("Failed to initialize event system!");
+        return FALSE;
+    }
 
     if (!PlatformStartUp(&AppState.PState,
                          GameInstance->AppConfig.Name,
@@ -104,6 +111,8 @@ b8 ApplicationRun()
     }
 
     AppState.IsRunning = FALSE;
+
+    ShutdownEvent();
 
     PlatformShutdown(&AppState.PState);
 
