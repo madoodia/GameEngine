@@ -7,6 +7,9 @@
 #include "Core/ge_memory.h"
 #include "Core/input.h"
 #include "Core/event.h"
+#include "Core/clock.h"
+
+#include "Renderer/renderer_frontend.h"
 
 #include "game_types.h"
 
@@ -18,6 +21,7 @@ struct ApplicationState
     PlatformState PState;
     i16 Width;
     i16 Height;
+    Clock Clk;
     f64 LastTime;
 };
 
@@ -75,6 +79,12 @@ b8 ApplicationCreate(Game* GameInstance)
         return FALSE;
     }
 
+    if (!InitializeRenderer(GameInstance->AppConfig.Name, &AppState.PState))
+    {
+        GEFATAL("Failed to initialize renderer. Aborting Application");
+        return FALSE;
+    }
+
     // Call the game's Initialize function
     if (!AppState.GameInstance->Initialize(AppState.GameInstance))
     {
@@ -92,6 +102,14 @@ b8 ApplicationCreate(Game* GameInstance)
 // Game Loop
 b8 ApplicationRun()
 {
+    StartClock(&AppState.Clk);
+    UpdateClock(&AppState.Clk);
+    AppState.LastTime = AppState.Clk.Elapsed;
+
+    f64 RunningTime = 0.0f;
+    u8 FrameCount = 0;
+    f64 TargetFrameSec = 1.0f / 60.0f;
+
     GEINFO(GetMemoryUsageString());
     while (AppState.IsRunning)
     {
@@ -102,9 +120,12 @@ b8 ApplicationRun()
 
         if (!AppState.IsSuspended)
         {
-            // Call the game's Update function
-            // TODO: Calculate delta time
-            if (!AppState.GameInstance->Update(AppState.GameInstance, (f32)0.0f))
+            UpdateClock(&AppState.Clk);
+            f64 CurrentTime = AppState.Clk.Elapsed;
+            f64 Delta = (CurrentTime - AppState.LastTime);
+            f64 FrameStartTime = PlatformGetAbsoluteTime();
+
+            if (!AppState.GameInstance->Update(AppState.GameInstance, (f32)Delta))
             {
                 GEFATAL("Game update failed!");
                 AppState.IsRunning = FALSE;
@@ -112,14 +133,39 @@ b8 ApplicationRun()
             }
 
             // Call the game's Render function
-            if (!AppState.GameInstance->Render(AppState.GameInstance, (f32)0.0f))
+            if (!AppState.GameInstance->Render(AppState.GameInstance, (f32)Delta))
             {
                 GEFATAL("Game render failed!");
                 AppState.IsRunning = FALSE;
                 break;
             }
 
-            UpdateInput(0.0);
+            // TODO: Refactor this later
+            RenderPacket Packet;
+            Packet.DeltaTime = Delta;
+            RendererDrawFrame(&Packet);
+
+            f64 FrameEndTime = PlatformGetAbsoluteTime();
+            f64 FrameElapsedTime = FrameEndTime - FrameStartTime;
+            RunningTime += FrameElapsedTime;
+            f64 RemainingSeconds = TargetFrameSec - FrameElapsedTime;
+
+            if (RemainingSeconds > 0)
+            {
+                u64 RemaiiningMS = (RemainingSeconds * 1000);
+
+                b8 LimitFrames = FALSE;
+                if (RemaiiningMS > 0 && LimitFrames)
+                {
+                    PlatformSleep(RemaiiningMS - 1);
+                }
+
+                FrameCount++;
+            }
+
+            UpdateInput(Delta);
+
+            AppState.LastTime = CurrentTime;
         }
     }
 
@@ -132,6 +178,8 @@ b8 ApplicationRun()
 
     ShutdownEvent();
     ShutdownInput();
+
+    ShutdownRenderer();
 
     PlatformShutdown(&AppState.PState);
 

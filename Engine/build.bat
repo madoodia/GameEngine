@@ -12,12 +12,12 @@ REM Set the build configuration (Debug/Release)
 SET BUILD_CONFIG=Debug
 SET BUILD_FLAG=_DEBUG
 @REM -g: debug information, -shared: create a shared library dll, -Wvarargs: warn about incompatible pointer types, -Wall: enable all warnings, -Werror: treat warnings as errors
-SET COMPILER_FLAGS=-g -shared -Wvarargs -Wall -Werror -std=c++20
+SET COMPILER_FLAGS=-g -shared -Wvarargs -Wall -Werror -std=c++20 -Wno-unused
 
 IF "%INPUT%"=="1" (
 	SET BUILD_CONFIG=Release
 	SET BUILD_FLAG=_RELEASE
-	SET COMPILER_FLAGS=-shared -Wvarargs -Wall -Werror -std=c++20
+	SET COMPILER_FLAGS=-shared -Wvarargs -Wall -Werror -std=c++20 -Wno-unused
 )
 
 SETLOCAL ENABLEDELAYEDEXPANSION
