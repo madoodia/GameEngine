@@ -5,6 +5,7 @@
 
 #include "Core/logger.h"
 #include "Platform/platform.h"
+#include "Core/ge_string.h"
 
 // TODO:Custom String lib
 #include <stdio.h>
@@ -137,6 +138,6 @@ char* GetMemoryUsageString()
         Offset += Length;
     }
 
-    char* Result = _strdup(Buffer);
+    char* Result = StringDuplicate(Buffer);
     return Result;
 }
