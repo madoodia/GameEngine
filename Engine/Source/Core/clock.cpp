@@ -7,16 +7,16 @@
 
 void StartClock(Clock* Clk)
 {
-    if (Clk->StartTime != 0)
-    {
-        Clk->Elapsed = PlatformGetAbsoluteTime() - Clk->StartTime;
-    }
+    Clk->StartTime = PlatformGetAbsoluteTime();
+    Clk->Elapsed = 0;
 }
 
 void UpdateClock(Clock* Clk)
 {
-    Clk->StartTime = PlatformGetAbsoluteTime();
-    Clk->Elapsed = 0;
+    if (Clk->StartTime != 0)
+    {
+        Clk->Elapsed = PlatformGetAbsoluteTime() - Clk->StartTime;
+    }
 }
 
 void StopClock(Clock* Clk)
