@@ -10,7 +10,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/Bin",
             "environment": [],
-            "preLaunchTask": "Build All (Debug)",
+            // "preLaunchTask": "Build All (Debug)",
             "externalConsole": true,
             "console": "newExternalWindow"
         },

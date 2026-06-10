@@ -29,13 +29,13 @@ static EventSystemState State;
 
 b8 InitializeEvent()
 {
-    if (IsInitialized)
+    if (IsInitialized == TRUE)
     {
         return FALSE;
     }
 
     IsInitialized = FALSE;
-    ZeroMemory(&State, sizeof(EventSystemState));
+    ZeroMemory(&State, sizeof(State));
     IsInitialized = TRUE;
 
     return TRUE;
@@ -43,12 +43,7 @@ b8 InitializeEvent()
 
 void ShutdownEvent()
 {
-    if (!IsInitialized)
-    {
-        return;
-    }
-
-    for (u64 i = 0; i < MAX_MESSAGE_CODES; i++)
+    for (u16 i = 0; i < MAX_MESSAGE_CODES; ++i)
     {
         if (State.Registered[i].Events != nullptr)
         {
@@ -56,13 +51,11 @@ void ShutdownEvent()
             State.Registered[i].Events = nullptr;
         }
     }
-
-    IsInitialized = FALSE;
 }
 
 b8 RegisterEvent(u16 Code, void* Listener, PFNOnEvent OnEvent)
 {
-    if (!IsInitialized)
+    if (IsInitialized == FALSE)
     {
         return FALSE;
     }
@@ -72,7 +65,7 @@ b8 RegisterEvent(u16 Code, void* Listener, PFNOnEvent OnEvent)
         State.Registered[Code].Events = (RegisteredEvent*)CreateDArray(RegisteredEvent);
     }
 
-    u64 RegisterCount = GetDArrayStride(State.Registered[Code].Events);
+    u64 RegisterCount = GetDArrayLength(State.Registered[Code].Events);
     for (u64 i = 0; i < RegisterCount; ++i)
     {
         if (State.Registered[Code].Events[i].Listener == Listener)
@@ -82,7 +75,7 @@ b8 RegisterEvent(u16 Code, void* Listener, PFNOnEvent OnEvent)
         }
     }
 
-    RegisteredEvent NewEvent = {};
+    RegisteredEvent NewEvent;
     NewEvent.Listener = Listener;
     NewEvent.Callback = OnEvent;
     PushDArray(State.Registered[Code].Events, NewEvent);

@@ -5,6 +5,7 @@
 #include "Platform/platform.h"
 #include "Core/logger.h"
 #include "Core/ge_memory.h"
+#include "Core/input.h"
 #include "Core/event.h"
 
 #include "game_types.h"
@@ -23,6 +24,10 @@ struct ApplicationState
 static b8 IsInitialized = FALSE;
 static ApplicationState AppState;
 
+// Event Handlers
+b8 ApplicationOnEvent(u16 Code, void* Sender, void* Listener, EventContext Context);
+b8 ApplicationOnKey(u16 Code, void* Sender, void* Listener, EventContext Context);
+
 // Create the application and initialize subsystems
 b8 ApplicationCreate(Game* GameInstance)
 {
@@ -36,6 +41,7 @@ b8 ApplicationCreate(Game* GameInstance)
 
     // Initialize subsystems here (e.g., logging, input, audio, etc.)
     InitializeLogging();
+    InitializeInput();
 
     // TODO: Remove this
     GEFATAL("This is a FATALITY message: %f", 2026.1);
@@ -53,6 +59,11 @@ b8 ApplicationCreate(Game* GameInstance)
         GEFATAL("Failed to initialize event system!");
         return FALSE;
     }
+
+    // Listening to events
+    RegisterEvent(APPLICATION_QUIT, nullptr, ApplicationOnEvent);
+    RegisterEvent(KEY_PRESSED, nullptr, ApplicationOnKey);
+    RegisterEvent(KEY_RELEASED, nullptr, ApplicationOnKey);
 
     if (!PlatformStartUp(&AppState.PState,
                          GameInstance->AppConfig.Name,
@@ -107,14 +118,82 @@ b8 ApplicationRun()
                 AppState.IsRunning = FALSE;
                 break;
             }
+
+            UpdateInput(0.0);
         }
     }
 
     AppState.IsRunning = FALSE;
 
+    // Shutdown subsystems here
+    UnRegisterEvent(APPLICATION_QUIT, nullptr, ApplicationOnEvent);
+    UnRegisterEvent(KEY_PRESSED, nullptr, ApplicationOnKey);
+    UnRegisterEvent(KEY_RELEASED, nullptr, ApplicationOnKey);
+
     ShutdownEvent();
+    ShutdownInput();
 
     PlatformShutdown(&AppState.PState);
 
     return TRUE;
+}
+
+b8 ApplicationOnEvent(u16 Code, void* Sender, void* Listener, EventContext Context)
+{
+    switch (Code)
+    {
+        case APPLICATION_QUIT: {
+            GEINFO("Received quit event, shutting down application...");
+            AppState.IsRunning = FALSE;
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+b8 ApplicationOnKey(u16 Code, void* Sender, void* Listener, EventContext Context)
+{
+    switch (Code)
+    {
+        case KEY_PRESSED: {
+            u16 KeyCode = Context.U16[0];
+            GEINFO("Key Pressed: %c", KeyCode);
+            switch (KeyCode)
+            {
+                case KEY_ESCAPE: {
+                    EventContext QuitContext = {};
+                    EmitEvent(APPLICATION_QUIT, nullptr, QuitContext);
+
+                    return TRUE;
+                }
+                case KEY_A: {
+                    GEINFO("Key A was pressed!");
+                }
+                default: {
+                    GEDEBUG("Unhandled key press: %c", KeyCode);
+                }
+                    return TRUE;
+            }
+        }
+        case KEY_RELEASED: {
+            u16 KeyCode = Context.U16[0];
+            switch (KeyCode)
+            {
+                case KEY_SPACE: {
+                    GEINFO("Space key was released!");
+                }
+                break;
+
+                default: {
+                    GEDEBUG("Unhandled key release: %d", KeyCode);
+                }
+                break;
+            }
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }

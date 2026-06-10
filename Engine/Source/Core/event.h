@@ -14,8 +14,8 @@ struct EventContext
         f64 F64[2];
 
         i32 I32[4];
-        u32 U32[4];
         f32 F32[4];
+        u32 U32[4];
 
         i16 I16[8];
         u16 U16[8];
@@ -38,14 +38,14 @@ GEAPI b8 EmitEvent(u16 Code, void* Sender, EventContext Context);
 
 enum SystemEventCode
 {
-    APPLICATION_QUIT = 0x01,
-    KEY_PRESSED = 0x02,
-    KEY_RELEASED = 0x03,
-    BUTTON_PRESSED = 0x04,
-    BUTTON_RELEASED = 0x05,
-    MOUSE_MODED = 0x06,
-    MOUSE_WHEELED = 0x07,
-    RESIZED = 0x08,
+    APPLICATION_QUIT = 0x00,
+    KEY_PRESSED = 0x01,
+    KEY_RELEASED = 0x02,
+    BUTTON_PRESSED = 0x03,
+    BUTTON_RELEASED = 0x04,
+    MOUSE_MODED = 0x05,
+    MOUSE_WHEELED = 0x06,
+    RESIZED = 0x07,
 
     MAX = 0xFF
 };

@@ -12,6 +12,7 @@ void* _CreateDArray(u64 Length, u64 Stride)
     u64 HeaderSize = DArrayField::FIELD_LENGTH * sizeof(u64);
     u64 ArraySize = Length * Stride;
     u64* NewArray = (u64*)AllocateMemory(HeaderSize + ArraySize, MEMORY_TAG_DARRAY);
+
     SetMemory(NewArray, 0, HeaderSize + ArraySize);
     NewArray[DArrayField::CAPACITY] = Length;
     NewArray[DArrayField::LENGTH] = 0;
@@ -44,11 +45,12 @@ void* _ResizeDArray(void* Array)
     u64 Length = GetDArrayLength(Array);
     u64 Stride = GetDArrayStride(Array);
     u64 Capacity = GetDArrayCapacity(Array);
-    void* Temp = _CreateDArray(Capacity * DAARAY_RESIZE_FACTOR, Stride);
+    void* Temp = _CreateDArray((Capacity * DAARAY_RESIZE_FACTOR), Stride);
     CopyMemory(Temp, Array, Length * Stride);
 
     _SetDArrayField(Temp, LENGTH, Length);
     _DestroyDArray(Array);
+
     return Temp;
 }
 
@@ -61,7 +63,7 @@ void* _PushDArray(void* Array, const void* ValuePtr)
     {
         Array = _ResizeDArray(Array);
     }
-    u64 Address = (u64)Array + Length * Stride;
+    u64 Address = (u64)Array + (Length * Stride);
     CopyMemory((void*)Address, ValuePtr, Stride);
     _SetDArrayField(Array, LENGTH, Length + 1);
     return Array;
@@ -71,7 +73,7 @@ void _PopDArray(void* Array, void* Destination)
 {
     u64 Length = GetDArrayLength(Array);
     u64 Stride = GetDArrayStride(Array);
-    u64 Address = (u64)Array + (Length - 1) * Stride;
+    u64 Address = (u64)Array + ((Length - 1) * Stride);
     CopyMemory(Destination, (void*)Address, Stride);
     _SetDArrayField(Array, LENGTH, Length - 1);
 }
