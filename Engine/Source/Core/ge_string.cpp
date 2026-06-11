@@ -18,3 +18,8 @@ char* StringDuplicate(const char* Source)
     memcpy(Dest, Source, Length + 1);
     return Dest;
 }
+
+GEAPI b8 StringEqual(const char* A, const char* B)
+{
+    return strcmp(A, B) == 0;
+}

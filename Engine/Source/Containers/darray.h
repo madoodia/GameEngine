@@ -39,10 +39,12 @@ GEAPI void* _PopDAtArray(void* Array, u64 Index, void* ValuePtr);
 
 #define DestroyDArray(Array) _DestroyDArray(Array);
 
-#define PushDArray(Array, Value)                            \
-    {                                                       \
-        decltype(Value) Temp = Value;                       \
-        Array = (decltype(Array))_PushDArray(Array, &Temp); \
+#define PushDArray(Array, Value)                                  \
+    {                                                             \
+        decltype(Value) Temp = Value;                             \
+        auto PurePtr = Array;                                     \
+        PurePtr = (decltype(PurePtr))_PushDArray(PurePtr, &Temp); \
+        Array = PurePtr;                                          \
     }
 
 #define PopDArray(Array, ValuePtr) \

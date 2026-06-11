@@ -1,13 +1,16 @@
 ﻿// (C) 2026 madoodia.com
 // ---------------------
 
-#include "vulkan_backend.h"
-#include "Core/logger.h"
-
+#include "Renderer/Vulkan/vulkan_backend.h"
 #include "Renderer/Vulkan/vulkan_types.inl"
+#include "Core/logger.h"
+#include "Core/ge_string.h"
+#include "Containers/darray.h"
+#include "Platform/platform.h"
+#include "Renderer/Vulkan/vulkan_platform.h"
 
 // We need Single Vulkan Context
-static VulkanContext VulkanContext;
+static struct VulkanContext VulkanContext;
 
 b8 VulkanRendererBackendInitialize(RendererBackend* Backend, const char* ApplicationName, struct PlatformState* PState)
 {
@@ -25,8 +28,24 @@ b8 VulkanRendererBackendInitialize(RendererBackend* Backend, const char* Applica
 
     VkInstanceCreateInfo CreateInfo = {}; // Set all fields to 0
 
-    CreateInfo.pApplicationInfo = &AppInfo;
     CreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+    CreateInfo.pApplicationInfo = &AppInfo;
+
+    const char** RequiredExtensions = (const char**)CreateDArray(const char*);
+    PushDArray(RequiredExtensions, &VK_KHR_SURFACE_EXTENSION_NAME); // Required for all platforms
+    PlatformGetRequiredExtensionNames(&RequiredExtensions);
+
+#if defined(_DEBUG)
+    PushDArray(RequiredExtensions, &VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    GEDEBUG("Required Vulkan Extensions:");
+    u32 Length = GetDArrayLength(RequiredExtensions);
+    for (u32 i = 0; i < Length; ++i)
+    {
+        GEDEBUG(RequiredExtensions[i]);
+    }
+#endif
+    CreateInfo.enabledExtensionCount = GetDArrayLength(RequiredExtensions);
+    CreateInfo.ppEnabledExtensionNames = RequiredExtensions;
 
     VkResult Result = vkCreateInstance(&CreateInfo, VulkanContext.Allocator, &VulkanContext.Instance);
 

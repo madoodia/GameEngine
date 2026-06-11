@@ -4,6 +4,8 @@
 #include "Core/logger.h"
 #include "Platform/platform.h"
 #include "Core/input.h"
+#include "Renderer/Vulkan/vulkan_platform.h"
+#include "Containers/darray.h"
 
 // Windows Platform Layer
 #if GEPLATFORM_WINDOWS
@@ -205,6 +207,11 @@ f64 PlatformGetAbsoluteTime()
 void PlatformSleep(u64 MSec)
 {
     Sleep(MSec);
+}
+
+void PlatformGetRequiredExtensionNames(const char*** OutExtensionNames)
+{
+    PushDArray(*OutExtensionNames, &"VK_KHR_win32_surface");
 }
 
 LRESULT CALLBACK

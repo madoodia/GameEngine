@@ -7,6 +7,7 @@
 #include "Core/input.h"
 #include "Core/event.h"
 #include "Core/ge_string.h"
+#include "Containers/darray.h"
 
 // Linux Platform Layer
 #if GEPLATFORM_LINUX
@@ -326,6 +327,11 @@ void PlatformSleep(u64 MSec)
     }
     usleep((MSec % 1000) * 1000);
 #endif
+}
+
+void PlatformGetRequiredExtensionNames(const char*** OutExtensionNames)
+{
+    PushDArray(*OutExtensionNames, "VK_KHR_xcb_surface"); // VK_KHR_xlib_surface ?
 }
 
 Keys TranslateKeycode(u32 XKeyCode)
