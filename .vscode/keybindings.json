@@ -33,6 +33,6 @@
     {
         "key": "ctrl+shift+alt+f",
         "command": "workbench.action.tasks.runTask",
-        "args": ""
+        "args": "Run Sandbox"
     }
 ]

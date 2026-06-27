@@ -47,3 +47,8 @@
 Intermediate/
 Bin/
 
+# VScode Extensions
+.continue
+
+# AI
+.agents

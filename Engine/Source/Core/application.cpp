@@ -65,9 +65,12 @@ b8 ApplicationCreate(Game* GameInstance)
     }
 
     // Listening to events
+    AppState.Width = GameInstance->AppConfig.WindowWidth;
+    AppState.Height = GameInstance->AppConfig.WindowHeight;
     RegisterEvent(APPLICATION_QUIT, nullptr, ApplicationOnEvent);
     RegisterEvent(KEY_PRESSED, nullptr, ApplicationOnKey);
     RegisterEvent(KEY_RELEASED, nullptr, ApplicationOnKey);
+    RegisterEvent(RESIZED, nullptr, ApplicationOnEvent);
 
     if (!PlatformStartUp(&AppState.PState,
                          GameInstance->AppConfig.Name,
@@ -175,6 +178,7 @@ b8 ApplicationRun()
     UnRegisterEvent(APPLICATION_QUIT, nullptr, ApplicationOnEvent);
     UnRegisterEvent(KEY_PRESSED, nullptr, ApplicationOnKey);
     UnRegisterEvent(KEY_RELEASED, nullptr, ApplicationOnKey);
+    UnRegisterEvent(RESIZED, nullptr, ApplicationOnEvent);
 
     ShutdownEvent();
     ShutdownInput();
@@ -193,6 +197,34 @@ b8 ApplicationOnEvent(u16 Code, void* Sender, void* Listener, EventContext Conte
         case APPLICATION_QUIT: {
             GEINFO("Received quit event, shutting down application...");
             AppState.IsRunning = FALSE;
+
+            return TRUE;
+        }
+        case RESIZED: {
+            u16 Width = Context.U16[0];
+            u16 Height = Context.U16[1];
+
+            // Only trigger if sizes differ to avoid redundant operations.
+            if (Width != AppState.Width || Height != AppState.Height)
+            {
+                AppState.Width = Width;
+                AppState.Height = Height;
+
+                GEINFO("Window resized: %d, %d", Width, Height);
+
+                // Handle minimization state
+                if (Width == 0 || Height == 0)
+                {
+                    GEINFO("Window minimized, suspending application loop.");
+                    AppState.IsSuspended = TRUE;
+                } else
+                {
+                    GEINFO("Window restored, resuming application loop.");
+                    AppState.IsSuspended = FALSE;
+                }
+                AppState.GameInstance->OnResize(AppState.GameInstance, Width, Height);
+                RendererOnResize(Width, Height);
+            }
 
             return TRUE;
         }
@@ -219,6 +251,7 @@ b8 ApplicationOnKey(u16 Code, void* Sender, void* Listener, EventContext Context
                 case KEY_A: {
                     GEINFO("Key A was pressed!");
                 }
+                break;
                 default: {
                     GEDEBUG("Unhandled key press: %c", KeyCode);
                 }

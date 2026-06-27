@@ -1,4 +1,4 @@
-﻿// (C) 2026 madoodia.com
+// (C) 2026 madoodia.com
 // ---------------------
 
 #include "Renderer/Vulkan/vulkan_backend.h"
@@ -8,6 +8,7 @@
 #include "Containers/darray.h"
 #include "Platform/platform.h"
 #include "Renderer/Vulkan/vulkan_platform.h"
+#include "Renderer/Vulkan/vulkan_device.h"
 
 // We need Single Vulkan Context
 static struct VulkanContext VulkanContext;
@@ -26,7 +27,7 @@ b8 VulkanRendererBackendInitialize(RendererBackend* Backend, const char* Applica
     AppInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
     AppInfo.pEngineName = "My Game Engine";
 
-    VkInstanceCreateInfo CreateInfo = {}; // Set all fields to 0
+    VkInstanceCreateInfo CreateInfo = {};
 
     CreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     CreateInfo.pApplicationInfo = &AppInfo;
@@ -52,8 +53,25 @@ b8 VulkanRendererBackendInitialize(RendererBackend* Backend, const char* Applica
     if (Result != VK_SUCCESS)
     {
         GEERROR("Failed to create Vulkan Instance! Error Code: %u", Result);
+        DestroyDArray(RequiredExtensions);
         return FALSE;
     }
+
+    if (!PlatformCreateVulkanSurface(&VulkanContext, PState))
+    {
+        GEERROR("Failed to create Vulkan Surface!");
+        DestroyDArray(RequiredExtensions);
+        return FALSE;
+    }
+
+    if (!VulkanDeviceCreate(&VulkanContext))
+    {
+        GEERROR("Failed to create Vulkan Device!");
+        DestroyDArray(RequiredExtensions);
+        return FALSE;
+    }
+
+    DestroyDArray(RequiredExtensions);
 
     GEINFO("Vulkan Renderer initialized successfully!");
 
@@ -62,6 +80,9 @@ b8 VulkanRendererBackendInitialize(RendererBackend* Backend, const char* Applica
 
 void VulkanRendererBackendShutdown(RendererBackend* Backend)
 {
+    VulkanDeviceDestroy(&VulkanContext);
+    vkDestroySurfaceKHR(VulkanContext.Instance, VulkanContext.Surface, VulkanContext.Allocator);
+    vkDestroyInstance(VulkanContext.Instance, VulkanContext.Allocator);
 }
 
 void VulkanRendererBackendOnResize(RendererBackend* Backend, u16 Width, u16 Height)

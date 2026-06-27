@@ -331,7 +331,7 @@ void PlatformSleep(u64 MSec)
 
 void PlatformGetRequiredExtensionNames(const char*** OutExtensionNames)
 {
-    PushDArray(*OutExtensionNames, "VK_KHR_xcb_surface"); // VK_KHR_xlib_surface ?
+    PushDArray(*OutExtensionNames, &"VK_KHR_xcb_surface"); // VK_KHR_xlib_surface ?
 }
 
 Keys TranslateKeycode(u32 XKeyCode)

@@ -6,13 +6,14 @@
 #include "Core/input.h"
 #include "Renderer/Vulkan/vulkan_platform.h"
 #include "Containers/darray.h"
+#include "Core/event.h"
 
 // Windows Platform Layer
-#if GEPLATFORM_WINDOWS
-
 #include <Windows.h>
 #include <windowsx.h>
 #include <stdlib.h>
+
+#include "Renderer/Vulkan/vulkan_types.inl"
 
 struct InternalState
 {
@@ -112,7 +113,7 @@ b8 PlatformStartUp(PlatformState* PState,
 
     // Clock Setup
     LARGE_INTEGER Frequency;
-    QueryPerformanceCounter(&Frequency);
+    QueryPerformanceFrequency(&Frequency);
     ClockFreq = 1.0 / (f64)Frequency.QuadPart;
     QueryPerformanceCounter(&StartTime);
 
@@ -214,6 +215,33 @@ void PlatformGetRequiredExtensionNames(const char*** OutExtensionNames)
     PushDArray(*OutExtensionNames, &"VK_KHR_win32_surface");
 }
 
+b8 PlatformCreateVulkanSurface(VulkanContext* Context, PlatformState* PState)
+{
+    if (!PState || !PState->InternalState || !Context)
+    {
+        GEFATAL("PlatformCreateVulkanSurface: Invalid arguments");
+        return FALSE;
+    }
+    // - Retrieve the InternalState from PState.
+    InternalState* State = (InternalState*)PState->InternalState;
+
+    // - Populate VkWin32SurfaceCreateInfoKHR with:
+    VkWin32SurfaceCreateInfoKHR CreateInfo = {};
+    CreateInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+    CreateInfo.hinstance = State->HInstance;
+    CreateInfo.hwnd = State->HWindow;
+
+    VkResult Result = vkCreateWin32SurfaceKHR(Context->Instance, &CreateInfo, Context->Allocator, &Context->Surface);
+    if (Result != VK_SUCCESS)
+    {
+        GEFATAL("PlatformCreateVulkanSurface: vkCreateWin32SurfaceKHR failed");
+        return FALSE;
+    }
+
+    GEINFO("PlatformCreateVulkanSurface: vkCreateWin32SurfaceKHR succeeded");
+    return TRUE;
+}
+
 LRESULT CALLBACK
 Win32Proc(HWND HWindow,
           u32 Message,
@@ -225,20 +253,29 @@ Win32Proc(HWND HWindow,
         case WM_ERASEBKGND:
             // NOTE:Notify the OS that erasing the background will be handled by aplication to prevent flicker.
             return 1;
-        case WM_CLOSE:
+        case WM_CLOSE: {
             // TODO: Fire an event for the application to quit.
-            // TODO: First set a bool variable, like, Running = false
+            EventContext QuitContext = {};
+            EmitEvent(APPLICATION_QUIT, nullptr, QuitContext);
             return 0;
-        case WM_DESTROY:
+        }
+        case WM_DESTROY: {
             PostQuitMessage(0);
             return 0;
+        }
         case WM_SIZE: {
             // Get the Updated Size
-            // RECT Rect;
-            // GetClientRect(HWindow, &Rect);
-            // u32 Width = Rect.right - Rect.left;
-            // u32 Width = Rect.buttom - Rect.top;
+            RECT Rect;
+            GetClientRect(HWindow, &Rect);
+            u32 Width = Rect.right - Rect.left;
+            u32 Height = Rect.bottom - Rect.top;
+
             // TODO: Fire an event for winsow resize
+            EventContext Context = {};
+            Context.U16[0] = (u16)Width;
+            Context.U16[1] = (u16)Height;
+
+            EmitEvent(RESIZED, nullptr, Context);
         }
         break;
         case WM_KEYDOWN:
@@ -301,5 +338,3 @@ Win32Proc(HWND HWindow,
     }
     return DefWindowProcA(HWindow, Message, WParam, LParam);
 }
-
-#endif // GEPLATFORM_WINDOWS

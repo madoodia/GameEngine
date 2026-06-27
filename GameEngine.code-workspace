@@ -4,19 +4,5 @@
             "path": ".",
         },
     ],
-    "settings": {
-        "files.associations": {
-            "*.h": "cpp",
-            "*.cpp": "cpp",
-        },
-        "C_Cpp.clang_format_style": "file",
-    },
-    "extensions": {
-        "recommendations": [
-            "ms-vscode.cpptools",
-            "wayou.vscode-todo-highlight",
-            "slevesque.shader",
-            "esbenp.prettier-vscode",
-        ],
-    },
+    "settings": {}
 }

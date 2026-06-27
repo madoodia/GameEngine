@@ -55,7 +55,7 @@ void UpdateInput(f64 DeltaTime)
     CopyMemory(&State.PreviousMouse, &State.CurrentMouse, sizeof(MouseState));
 }
 
-GEAPI b8 InputIsKeyDown(Keys Key)
+b8 InputIsKeyDown(Keys Key)
 {
     if (!IsInitialized)
     {
@@ -66,7 +66,7 @@ GEAPI b8 InputIsKeyDown(Keys Key)
     return State.CurrentKeyboard.Keys[Key] == TRUE;
 }
 
-GEAPI b8 InputIsKeyUp(Keys Key)
+b8 InputIsKeyUp(Keys Key)
 {
     if (!IsInitialized)
     {
@@ -77,7 +77,7 @@ GEAPI b8 InputIsKeyUp(Keys Key)
     return State.CurrentKeyboard.Keys[Key] == FALSE;
 }
 
-GEAPI b8 InputWasKeyDown(Keys Key)
+b8 InputWasKeyDown(Keys Key)
 {
     if (!IsInitialized)
     {
@@ -88,7 +88,7 @@ GEAPI b8 InputWasKeyDown(Keys Key)
     return State.PreviousKeyboard.Keys[Key] == TRUE;
 }
 
-GEAPI b8 InputWasKeyUp(Keys Key)
+b8 InputWasKeyUp(Keys Key)
 {
     if (!IsInitialized)
     {
@@ -96,7 +96,7 @@ GEAPI b8 InputWasKeyUp(Keys Key)
         return FALSE;
     }
 
-    return State.PreviousKeyboard.Keys[Key] == TRUE;
+    return State.PreviousKeyboard.Keys[Key] == FALSE;
 }
 
 void InputProcessKey(Keys Key, b8 Pressed)
@@ -112,7 +112,7 @@ void InputProcessKey(Keys Key, b8 Pressed)
     }
 }
 
-GEAPI b8 InputIsButtonDown(MouseButton Button)
+b8 InputIsButtonDown(MouseButton Button)
 {
     if (!IsInitialized)
     {
@@ -123,7 +123,7 @@ GEAPI b8 InputIsButtonDown(MouseButton Button)
     return State.CurrentMouse.Buttons[Button] == TRUE;
 }
 
-GEAPI b8 InputIsButtonUp(MouseButton Button)
+b8 InputIsButtonUp(MouseButton Button)
 {
     if (!IsInitialized)
     {
@@ -134,7 +134,7 @@ GEAPI b8 InputIsButtonUp(MouseButton Button)
     return State.CurrentMouse.Buttons[Button] == FALSE;
 }
 
-GEAPI b8 InputWasButtonDown(MouseButton Button)
+b8 InputWasButtonDown(MouseButton Button)
 {
     if (!IsInitialized)
     {
@@ -145,7 +145,7 @@ GEAPI b8 InputWasButtonDown(MouseButton Button)
     return State.PreviousMouse.Buttons[Button] == TRUE;
 }
 
-GEAPI b8 InputWasButtonUp(MouseButton Button)
+b8 InputWasButtonUp(MouseButton Button)
 {
     if (!IsInitialized)
     {
@@ -156,7 +156,7 @@ GEAPI b8 InputWasButtonUp(MouseButton Button)
     return State.PreviousMouse.Buttons[Button] == FALSE;
 }
 
-GEAPI void InputGetMousePosition(i32* X, i32* Y)
+void InputGetMousePosition(i32* X, i32* Y)
 {
     if (!IsInitialized)
     {
@@ -170,7 +170,7 @@ GEAPI void InputGetMousePosition(i32* X, i32* Y)
     *Y = State.CurrentMouse.Y;
 }
 
-GEAPI void InputGetPrevMousePosition(i32* X, i32* Y)
+void InputGetPrevMousePosition(i32* X, i32* Y)
 {
     if (!IsInitialized)
     {

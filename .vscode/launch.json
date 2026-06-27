@@ -1,28 +1,28 @@
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(Win) Launch",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Bin/Debug/Sandbox.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/Bin",
-            "environment": [],
-            // "preLaunchTask": "Build All (Debug)",
-            "externalConsole": true,
-            "console": "newExternalWindow"
-        },
-        {
-            "name": "(Linux) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Bin/Debug/Sandbox",
-            "args": [],
-            "stopOnEntry": false,
-            "cwd": "${workspaceFolder}/Bin",
-            "env": {}
-        }
-    ]
-}
+// {
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": "(Win) Launch",
+//             "type": "cppvsdbg",
+//             "request": "launch",
+//             "program": "${workspaceFolder}/Bin/Debug/Sandbox.exe",
+//             "args": [],
+//             "stopAtEntry": false,
+//             "cwd": "${workspaceFolder}/Bin",
+//             "environment": [],
+//             // "preLaunchTask": "Build All (Debug)",
+//             "externalConsole": true,
+//             "console": "newExternalWindow"
+//         },
+//         {
+//             "name": "(Linux) Launch",
+//             "type": "cppdbg",
+//             "request": "launch",
+//             "program": "${workspaceFolder}/Bin/Debug/Sandbox",
+//             "args": [],
+//             "stopOnEntry": false,
+//             "cwd": "${workspaceFolder}/Bin",
+//             "env": {}
+//         }
+//     ]
+// }

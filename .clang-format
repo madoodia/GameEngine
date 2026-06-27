@@ -32,6 +32,3 @@ BraceWrapping:
     AfterFunction: true
     AfterControlStatement: true
     AfterCaseLabel: false
-PackParameters:
-    BinPack: UseBreakAfter
-    BreakAfter: 2

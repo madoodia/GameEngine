@@ -136,6 +136,21 @@
                 "reveal": "always"
             },
             "isBackground": false
+        },
+        {
+            "type": "shell",
+            "label": "Run Sandbox",
+            "windows": {
+                "command": "${workspaceFolder}/Bin/Debug/Sandbox.exe"
+            },
+            "linux": {
+                "command": "${workspaceFolder}/Bin/Debug/Sandbox"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Sandbox application executable."
         }
     ]
 }
